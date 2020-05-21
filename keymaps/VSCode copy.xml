@@ -1,0 +1,19 @@
+<keymap version="1" name="VSCode copy" parent="VSCode">
+  <action id="EditorDecreaseFontSize">
+    <keyboard-shortcut first-keystroke="meta alt minus" />
+  </action>
+  <action id="EditorIncreaseFontSize">
+    <keyboard-shortcut first-keystroke="meta alt equals" />
+  </action>
+  <action id="GotoSymbol" />
+  <action id="MoveTabRight">
+    <keyboard-shortcut first-keystroke="ctrl meta right" />
+    <keyboard-shortcut first-keystroke="meta alt 2" />
+  </action>
+  <action id="TerminalSplitActionBase$Vertical">
+    <keyboard-shortcut first-keystroke="meta t" />
+  </action>
+  <action id="Unsplit">
+    <keyboard-shortcut first-keystroke="meta alt back_slash" />
+  </action>
+</keymap>

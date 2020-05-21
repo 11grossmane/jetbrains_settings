@@ -1,0 +1,9 @@
+<application>
+  <component name="FileTypeManager" version="17">
+    <extensionMap>
+      <mapping pattern="tasks-worker" type="PLAIN_TEXT" />
+      <mapping pattern="update_idrive" type="Shell Script" />
+      <mapping pattern="run_single_test_file" type="Shell Script" />
+    </extensionMap>
+  </component>
+</application>
