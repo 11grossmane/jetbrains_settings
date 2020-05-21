@@ -3,6 +3,7 @@
     <sdk-path>
       <set>
         <option value="$USER_HOME$/.asdf/installs/golang/1.13.1/go" />
+        <option value="/usr/local/go" />
       </set>
     </sdk-path>
   </component>
