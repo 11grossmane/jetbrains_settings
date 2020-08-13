@@ -2,6 +2,7 @@
   <component name="FileTypeManager" version="17">
     <extensionMap>
       <mapping pattern="tasks-worker" type="PLAIN_TEXT" />
+      <mapping pattern=".tool-version" type="PLAIN_TEXT" />
       <mapping ext="payments-invoice-cron-worker" type="PLAIN_TEXT" />
       <mapping pattern="update_idrive" type="Shell Script" />
       <mapping pattern="run_single_test_file" type="Shell Script" />
