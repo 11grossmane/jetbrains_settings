@@ -4,7 +4,12 @@
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="ihttp-error-handler" value="if err != nil {&#10;&#9;&#9;logger.Errorw(metricName, &quot;userID&quot;, userID, &quot;err&quot;, err)&#10;&#9;&#9;if paymentsError, ok := err.(*ihttp.Error); ok {&#10;&#9;&#9;&#9;ihttp.RespondWithError(rw, paymentsError.StatusCode, &#10;&#9;&#9;&#9;paymentsError.Message)&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="handles errors coming from iDrive clients" toReformat="false" toShortenFQNames="true">
+  <template name="error-ihttp-handler" value="if err != nil {&#10;&#9;&#9;logger.Errorw(metricName, &quot;userID&quot;, userID, &quot;err&quot;, err)&#10;&#9;&#9;if paymentsError, ok := err.(*ihttp.Error); ok {&#10;&#9;&#9;&#9;ihttp.RespondWithError(rw, paymentsError.StatusCode, &#10;&#9;&#9;&#9;paymentsError.Message)&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="handles errors coming from iDrive clients" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
+  <template name="error-not-found" value="&#9;if err!=nil{&#10;&#9;&#9;ctxLog.Errorw(metricName+&quot;.IOUtil.ReadAll&quot;, &quot;err&quot;,err)&#10;&#9;&#9;ihttp.RespondWithError(rw,http.StatusInternalServerError,err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="handles status not found http response" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
