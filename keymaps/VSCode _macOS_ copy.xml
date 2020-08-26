@@ -1,0 +1,5 @@
+<keymap version="1" name="VSCode (macOS) copy" parent="VSCode OSX">
+  <action id="Unsplit">
+    <keyboard-shortcut first-keystroke="meta alt 1" />
+  </action>
+</keymap>
