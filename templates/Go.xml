@@ -14,9 +14,10 @@
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="err_ack" value="if err!=nil{&#10;&#9;&#9;w.logger.Errorw(metricName+&quot;.Find&quot;, &quot;err&quot;,err)&#10;&#9;&#9;//TODO DLQ&#10;&#9;&#9;chMessagesWaitingForAck &lt;-msg&#10;&#9;&#9;continue&#10;&#9;}" description="error  handling for acking message and continue" toReformat="false" toShortenFQNames="true">
+  <template name="err_ack_find_one" value="if err!=nil{&#10;&#9;&#9;w.logger.Errorw(metricName+&quot;.Find&quot;,&quot;filter&quot;,filter, &quot;err&quot;,err)&#10;&#9;&#9;//TODO DLQ&#10;&#9;&#9;chMessagesWaitingForAck &lt;-msg&#10;&#9;&#9;continue&#10;&#9;}" description="ack find one errors" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
   </template>
+  <template name="err_ack_update_one" value="&#9;if err!=nil{&#10;&#9;&#9;&#9;&#9;w.logger.Errorw(metricName+&quot;.UpdateOne&quot;, &quot;filter&quot;,filter,&quot;err&quot;,err)&#10;&#9;&#9;&#9;&#9;//TODO DLQ&#10;&#9;&#9;&#9;&#9;chMessagesWaitingForAck &lt;-msg&#10;&#9;&#9;&#9;&#9;continue&#10;&#9;&#9;&#9;}&#10;&#9;&#9;&#9;if res.MatchedCount == 0{&#10;&#9;&#9;&#9;&#9;w.logger.Errorw(metricName+&quot;.MatchedCount&quot;, &quot;filter&quot;,filter)&#10;&#9;&#9;&#9;&#9;//TODO DLQ&#10;&#9;&#9;&#9;&#9;chMessagesWaitingForAck &lt;-msg&#10;&#9;&#9;&#9;&#9;continue&#10;&#9;&#9;&#9;}" description="ack update one errors" toReformat="false" toShortenFQNames="true" />
 </templateSet>
