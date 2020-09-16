@@ -24,4 +24,9 @@
       <option name="GO" value="true" />
     </context>
   </template>
+  <template name="err_basic_ack" value="if err!=nil{&#10;&#9;&#9;&#9;//additional logging in function&#10;&#9;&#9;&#9;w.logger.Errorw(metricName,&quot;err&quot;,err)&#10;&#9;&#9;&#9;//TODO send to DLQ&#10;&#9;&#9;&#9;chMessagesWaitingForAck&lt;-msg&#10;&#9;&#9;&#9;continue&#10;&#9;&#9;}" description="basic ack used primarily in route methods" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
 </templateSet>
