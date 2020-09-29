@@ -19,7 +19,7 @@
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="err_ack_update_one" value="if err != nil {&#10;&#9;&#9;&#9;w.logger.Errorw(metricName+&quot;.UpdateOne.Prev&quot;, &quot;filter&quot;, filter, &quot;update&quot;, update, &quot;err&quot;, err)&#10;&#9;&#9;&#9;//TODO DLQ&#10;&#9;&#9;&#9;chMessagesWaitingForAck &lt;- msg&#10;&#9;&#9;&#9;continue&#10;&#9;&#9;}&#10;&#10;&#9;&#9;if res.MatchedCount == 0 {&#10;&#9;&#9;&#9;w.logger.Errorw(metricName, &quot;.MatchedCountZero&quot;, &quot;filter&quot;, filter, &quot;update&quot;, update)&#10;&#9;&#9;&#9;//TODO DLQ&#10;&#9;&#9;&#9;chMessagesWaitingForAck &lt;- msg&#10;&#9;&#9;&#9;continue&#10;&#9;&#9;}" description="ack update one errors" toReformat="false" toShortenFQNames="true">
+  <template name="err_ack_update_one" value="if err != nil {&#10;&#9;&#9;&#9;w.logger.Errorw(metricName+&quot;.UpdateOne&quot;, &quot;filter&quot;, filter, &quot;update&quot;, update, &quot;err&quot;, err)&#10;&#9;&#9;&#9;//TODO DLQ&#10;&#9;&#9;&#9;chMessagesWaitingForAck &lt;- msg&#10;&#9;&#9;&#9;continue&#10;&#9;&#9;}&#10;&#10;&#9;&#9;if res.MatchedCount == 0 {&#10;&#9;&#9;&#9;w.logger.Errorw(metricName, &quot;.MatchedCountZero&quot;, &quot;filter&quot;, filter, &quot;update&quot;, update)&#10;&#9;&#9;&#9;//TODO DLQ&#10;&#9;&#9;&#9;chMessagesWaitingForAck &lt;- msg&#10;&#9;&#9;&#9;continue&#10;&#9;&#9;}" description="ack update one errors" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
