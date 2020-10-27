@@ -34,4 +34,9 @@
       <option name="GO" value="true" />
     </context>
   </template>
+  <template name="err_http_client" value="if err != nil {&#10;&#9;&#9;ctxLog.Errorw(metricName+&quot;.&quot;, &quot;err&quot;, err)&#10;&#9;&#9;if clientError, ok := err.(*ihttp.Error); ok {&#10;&#9;&#9;&#9;ihttp.RespondWithError(rw, clientError.StatusCode, clientError.Message)&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
 </templateSet>
