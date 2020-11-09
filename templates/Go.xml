@@ -44,4 +44,9 @@
       <option name="GO" value="true" />
     </context>
   </template>
+  <template name="err_http_marshal" value="if err != nil {&#10;&#9;&#9;logger.Errorw(metricName+&quot;.Marshal&quot;,&quot;err&quot; , err)&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="GO" value="true" />
+    </context>
+  </template>
 </templateSet>
