@@ -7,5 +7,8 @@
   <codeStyleSettings language="go">
     <option name="RIGHT_MARGIN" value="80" />
     <option name="WRAP_ON_TYPING" value="1" />
+    <indentOptions>
+      <option name="USE_TAB_CHARACTER" value="false" />
+    </indentOptions>
   </codeStyleSettings>
 </code_scheme>
