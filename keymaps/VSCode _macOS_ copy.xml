@@ -1,4 +1,15 @@
 <keymap version="1" name="VSCode (macOS) copy" parent="VSCode OSX">
+  <action id="ActivateFavoritesToolWindow" />
+  <action id="DuplicatesForm.SendToLeft" />
+  <action id="DuplicatesForm.SendToRight" />
+  <action id="FileChooser.GotoHome" />
+  <action id="FileChooser.GotoProject" />
+  <action id="NextSplitter">
+    <keyboard-shortcut first-keystroke="meta 2" />
+  </action>
+  <action id="PrevSplitter">
+    <keyboard-shortcut first-keystroke="meta 1" />
+  </action>
   <action id="Unsplit">
     <keyboard-shortcut first-keystroke="meta alt 1" />
   </action>
