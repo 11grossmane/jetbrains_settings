@@ -1,153 +1,69 @@
 <templateSet group="Go">
-  <template name="err_parser" value="// parseResponse ensures the response status codes, and ability to decode response body&#10;func (i *PaymentsClientImpl) parseResponse(res *http.Response, respStruct interface{}, startTime time.Time,&#10;&#9;metricName string) error {&#10;&#9;i.metrics.Timer(metricName, time.Since(startTime))&#10;&#9;i.metrics.Increment(fmt.Sprintf(metricName+&quot;.%s&quot;, strconv.Itoa(res.StatusCode)))&#10;&#10;&#9;js, err := ioutil.ReadAll(res.Body)&#10;&#9;if err != nil {&#10;&#9;&#9;return &amp;ihttp.Error{&#10;&#9;&#9;&#9;Message:    err.Error(),&#10;&#9;&#9;&#9;StatusCode: http.StatusInternalServerError,&#10;&#9;&#9;}&#10;&#9;}&#10;&#10;&#9;switch res.StatusCode {&#10;&#9;case http.StatusOK, http.StatusCreated:&#10;&#9;&#9;if err := json.Unmarshal(js, respStruct); err != nil {&#10;&#9;&#9;&#9;return &amp;ihttp.Error{&#10;&#9;&#9;&#9;&#9;Message:    string(js),&#10;&#9;&#9;&#9;&#9;StatusCode: http.StatusInternalServerError,&#10;&#9;&#9;&#9;}&#10;&#9;&#9;}&#10;&#9;&#9;return nil&#10;&#9;case http.StatusNoContent:&#10;&#9;&#9;return nil&#10;&#9;case http.StatusNotFound, http.StatusBadRequest, http.StatusConflict:&#10;&#9;&#9;return &amp;ihttp.Error{&#10;&#9;&#9;&#9;Message:    string(js),&#10;&#9;&#9;&#9;StatusCode: res.StatusCode,&#10;&#9;&#9;}&#10;&#9;default:&#10;&#9;&#9;return &amp;ihttp.Error{&#10;&#9;&#9;&#9;StatusCode: res.StatusCode,&#10;&#9;&#9;&#9;Message:    fmt.Sprintf(&quot;unexpected response code: %v, message: %v&quot;, res.StatusCode, string(js)),&#10;&#9;&#9;}&#10;&#9;}&#10;}" description="http error parsing" toReformat="true" toShortenFQNames="true" deactivated="true">
+  <template name="err_parser" value="// parseResponse ensures the response status codes, and ability to decode response body&#10;func (i *PaymentsClientImpl) parseResponse(res *http.Response, respStruct interface{}, startTime time.Time,&#10;&#9;metricName string) error {&#10;&#9;i.metrics.Timer(metricName, time.Since(startTime))&#10;&#9;i.metrics.Increment(fmt.Sprintf(metricName+&quot;.%s&quot;, strconv.Itoa(res.StatusCode)))&#10;&#10;&#9;js, err := ioutil.ReadAll(res.Body)&#10;&#9;if err != nil {&#10;&#9;&#9;return &amp;ihttp.Error{&#10;&#9;&#9;&#9;Message:    err.Error(),&#10;&#9;&#9;&#9;StatusCode: http.StatusInternalServerError,&#10;&#9;&#9;}&#10;&#9;}&#10;&#10;&#9;switch res.StatusCode {&#10;&#9;case http.StatusOK, http.StatusCreated:&#10;&#9;&#9;if err := json.Unmarshal(js, respStruct); err != nil {&#10;&#9;&#9;&#9;return &amp;ihttp.Error{&#10;&#9;&#9;&#9;&#9;Message:    string(js),&#10;&#9;&#9;&#9;&#9;StatusCode: http.StatusInternalServerError,&#10;&#9;&#9;&#9;}&#10;&#9;&#9;}&#10;&#9;&#9;return nil&#10;&#9;case http.StatusNoContent:&#10;&#9;&#9;return nil&#10;&#9;case http.StatusNotFound, http.StatusBadRequest, http.StatusConflict:&#10;&#9;&#9;return &amp;ihttp.Error{&#10;&#9;&#9;&#9;Message:    string(js),&#10;&#9;&#9;&#9;StatusCode: res.StatusCode,&#10;&#9;&#9;}&#10;&#9;default:&#10;&#9;&#9;return &amp;ihttp.Error{&#10;&#9;&#9;&#9;StatusCode: res.StatusCode,&#10;&#9;&#9;&#9;Message:    fmt.Sprintf(&quot;unexpected response code: %v, message: %v&quot;, res.StatusCode, string(js)),&#10;&#9;&#9;}&#10;&#9;}&#10;}" description="http error parsing" toReformat="true" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="err_ihttp_handler" value="if err != nil {&#10;&#9;&#9;logger.Errorw(metricName, &quot;userID&quot;, userID, &quot;err&quot;, err)&#10;&#9;&#9;if paymentsError, ok := err.(*ihttp.Error); ok {&#10;&#9;&#9;&#9;ihttp.RespondWithError(rw, paymentsError.StatusCode, &#10;&#9;&#9;&#9;paymentsError.Message)&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="handles errors coming from iDrive clients" toReformat="false" toShortenFQNames="true" deactivated="true">
+  <template name="err_ihttp_handler" value="if err != nil {&#10;&#9;&#9;logger.Errorw(metricName, &quot;userID&quot;, userID, &quot;err&quot;, err)&#10;&#9;&#9;if paymentsError, ok := err.(*ihttp.Error); ok {&#10;&#9;&#9;&#9;ihttp.RespondWithError(rw, paymentsError.StatusCode, &#10;&#9;&#9;&#9;paymentsError.Message)&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="handles errors coming from iDrive clients" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="err_not_found" value="&#9;if err!=nil{&#10;&#9;&#9;ctxLog.Errorw(metricName+&quot;.IOUtil.ReadAll&quot;, &quot;err&quot;,err)&#10;&#9;&#9;ihttp.RespondWithError(rw,http.StatusInternalServerError,err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="handles status not found http response" toReformat="false" toShortenFQNames="true" deactivated="true">
+  <template name="err_not_found" value="&#9;if err!=nil{&#10;&#9;&#9;ctxLog.Errorw(metricName+&quot;.IOUtil.ReadAll&quot;, &quot;err&quot;,err)&#10;&#9;&#9;ihttp.RespondWithError(rw,http.StatusInternalServerError,err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="handles status not found http response" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="err_ack_find_one" value="if err!=nil{&#10;&#9;&#9;w.logger.Errorw(metricName+&quot;.Find&quot;,&quot;filter&quot;,filter, &quot;err&quot;,err)&#10;&#9;&#9;//TODO DLQ&#10;&#9;&#9;chMessagesWaitingForAck &lt;-msg&#10;&#9;&#9;continue&#10;&#9;}" description="ack find one errors" toReformat="false" toShortenFQNames="true" deactivated="true">
+  <template name="err_ack_find_one" value="if err!=nil{&#10;&#9;&#9;w.logger.Errorw(metricName+&quot;.Find&quot;,&quot;filter&quot;,filter, &quot;err&quot;,err)&#10;&#9;&#9;//TODO DLQ&#10;&#9;&#9;chMessagesWaitingForAck &lt;-msg&#10;&#9;&#9;continue&#10;&#9;}" description="ack find one errors" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="err_ack_update_one" value="if err != nil {&#10;&#9;&#9;&#9;w.logger.Errorw(metricName+&quot;.UpdateOne&quot;, &quot;filter&quot;, filter, &quot;update&quot;, update, &quot;err&quot;, err)&#10;&#9;&#9;&#9;//TODO DLQ&#10;&#9;&#9;&#9;chMessagesWaitingForAck &lt;- msg&#10;&#9;&#9;&#9;continue&#10;&#9;&#9;}&#10;&#10;&#9;&#9;if res.MatchedCount == 0 {&#10;&#9;&#9;&#9;w.logger.Errorw(metricName, &quot;.MatchedCountZero&quot;, &quot;filter&quot;, filter, &quot;update&quot;, update)&#10;&#9;&#9;&#9;//TODO DLQ&#10;&#9;&#9;&#9;chMessagesWaitingForAck &lt;- msg&#10;&#9;&#9;&#9;continue&#10;&#9;&#9;}" description="ack update one errors" toReformat="false" toShortenFQNames="true" deactivated="true">
+  <template name="err_ack_update_one" value="if err != nil {&#10;&#9;&#9;&#9;w.logger.Errorw(metricName+&quot;.UpdateOne&quot;, &quot;filter&quot;, filter, &quot;update&quot;, update, &quot;err&quot;, err)&#10;&#9;&#9;&#9;//TODO DLQ&#10;&#9;&#9;&#9;chMessagesWaitingForAck &lt;- msg&#10;&#9;&#9;&#9;continue&#10;&#9;&#9;}&#10;&#10;&#9;&#9;if res.MatchedCount == 0 {&#10;&#9;&#9;&#9;w.logger.Errorw(metricName, &quot;.MatchedCountZero&quot;, &quot;filter&quot;, filter, &quot;update&quot;, update)&#10;&#9;&#9;&#9;//TODO DLQ&#10;&#9;&#9;&#9;chMessagesWaitingForAck &lt;- msg&#10;&#9;&#9;&#9;continue&#10;&#9;&#9;}" description="ack update one errors" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="err_basic_ack" value="if err!=nil{&#10;&#9;&#9;&#9;//additional logging in function&#10;&#9;&#9;&#9;w.logger.Errorw(metricName,&quot;err&quot;,err)&#10;&#9;&#9;&#9;//TODO send to DLQ&#10;&#9;&#9;&#9;chMessagesWaitingForAck&lt;-msg&#10;&#9;&#9;&#9;continue&#10;&#9;&#9;}" description="basic ack used primarily in route methods" toReformat="false" toShortenFQNames="true" deactivated="true">
+  <template name="err_basic_ack" value="if err!=nil{&#10;&#9;&#9;&#9;//additional logging in function&#10;&#9;&#9;&#9;w.logger.Errorw(metricName,&quot;err&quot;,err)&#10;&#9;&#9;&#9;//TODO send to DLQ&#10;&#9;&#9;&#9;chMessagesWaitingForAck&lt;-msg&#10;&#9;&#9;&#9;continue&#10;&#9;&#9;}" description="basic ack used primarily in route methods" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="err_generic-http" value="if err != nil {&#10;&#9;&#9;ctxLogger.Errorw(metricName, &quot;err&quot;, err)&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="" toReformat="false" toShortenFQNames="true" deactivated="true">
+  <template name="err_generic-http" value="if err != nil {&#10;&#9;&#9;ctxLogger.Errorw(metricName, &quot;err&quot;, err)&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="err_client" value="if err != nil {&#10;&#9;&#9;ctxLog.Errorw(metricName+&quot;.&quot;, &quot;err&quot;, err)&#10;&#9;&#9;if clientError, ok := err.(*ihttp.Error); ok {&#10;&#9;&#9;&#9;ihttp.RespondWithError(rw, clientError.StatusCode, clientError.Message)&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="handles custom errors coming from controller" toReformat="false" toShortenFQNames="true" deactivated="true">
+  <template name="err_from-client" value="if err != nil {&#10;&#9;&#9;ctxLog.Errorw(metricName+&quot;.&quot;, &quot;err&quot;, err)&#10;&#9;&#9;if clientError, ok := err.(*ihttp.Error); ok {&#10;&#9;&#9;&#9;ihttp.RespondWithError(rw, clientError.StatusCode, clientError.Message)&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="handles custom errors coming from client" toReformat="true" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="err_controller_find_one" value="if err != nil {&#10;&#9;&#9;ctxLogger.Errorw(metricName+&quot;.FindOne&quot;, &quot;reportID&quot;,reportID,&quot;err&quot;, err)&#10;&#9;&#9;if err.Error() == imongo.NO_DOCUMENTS_IN_RESULT {&#10;&#9;&#9;&#9;ihttp.RespondWithError(rw, http.StatusNotFound, err.Error())&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="" toReformat="false" toShortenFQNames="true" deactivated="true">
+  <template name="err_controller_find_one" value="if err != nil {&#10;&#9;&#9;ctxLogger.Errorw(metricName+&quot;.FindOne&quot;, &quot;reportID&quot;,reportID,&quot;err&quot;, err)&#10;&#9;&#9;if err.Error() == imongo.NO_DOCUMENTS_IN_RESULT {&#10;&#9;&#9;&#9;ihttp.RespondWithError(rw, http.StatusNotFound, err.Error())&#10;&#9;&#9;&#9;return&#10;&#9;&#9;}&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="err_http_marshal" value="if err != nil {&#10;&#9;&#9;logger.Errorw(metricName+&quot;.Marshal&quot;,&quot;err&quot; , err)&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="" toReformat="false" toShortenFQNames="true" deactivated="true">
+  <template name="err_http_marshal" value="if err != nil {&#10;&#9;&#9;logger.Errorw(metricName+&quot;.Marshal&quot;,&quot;err&quot; , err)&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="cres" value="Convey(&quot;$description$&quot;, t, func(){&#10;&#9;$convey$&#10;&#9;Reset(func() {&#10;&#9;&#9;paymentsCollection.Drop(context.Background())&#10;&#9;})&#10;})" description="" toReformat="false" toShortenFQNames="true" deactivated="true">
+  <template name="cres" value="Convey(&quot;$description$&quot;, t, func(){&#10;&#9;$convey$&#10;&#9;Reset(func() {&#10;&#9;&#9;paymentsCollection.Drop(context.Background())&#10;&#9;})&#10;})" description="" toReformat="false" toShortenFQNames="true">
     <variable name="description" expression="" defaultValue="" alwaysStopAt="true" />
     <variable name="convey" expression="" defaultValue="" alwaysStopAt="true" />
     <context>
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="err_http_decode" value="if err != nil {&#10;&#9;&#9;c.logger.Errorw(metricName+&quot;.Decode&quot;, &quot;err&quot;, err)&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="" toReformat="false" toShortenFQNames="true" deactivated="true">
+  <template name="err_http_decode" value="if err != nil {&#10;&#9;&#9;c.logger.Errorw(metricName+&quot;.Decode&quot;, &quot;err&quot;, err)&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError, err.Error())&#10;&#9;&#9;return&#10;&#9;}" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
   </template>
-  <template name="err_controller_update_one" value="if err != nil {&#10;&#9;&#9;ctxLogger.Errorw(metricName+&quot;.UpdateOne&quot;, &quot;filter&quot;, filter,&#10;&#9;&#9;&#9;&quot;update&quot;, update, &quot;err&quot;, err)&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError,&#10;&#9;&#9;&#9;err.Error())&#10;&#9;&#9;return&#10;&#9;}&#10;&#10;&#9;if res.MatchedCount == 0 {&#10;&#9;&#9;ctxLogger.Errorw(metricName, &quot;.MatchedCountZero&quot;, &quot;filter&quot;,&#10;&#9;&#9;&#9;filter, &quot;update&quot;, update)&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusNotFound,&#10;&#9;&#9;&#9;&quot;not found&quot;)&#10;&#9;&#9;return&#10;&#9;}" description="" toReformat="false" toShortenFQNames="true" deactivated="true">
+  <template name="err_controller_update_one" value="if err != nil {&#10;&#9;&#9;ctxLogger.Errorw(metricName+&quot;.UpdateOne&quot;, &quot;filter&quot;, filter,&#10;&#9;&#9;&#9;&quot;update&quot;, update, &quot;err&quot;, err)&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusInternalServerError,&#10;&#9;&#9;&#9;err.Error())&#10;&#9;&#9;return&#10;&#9;}&#10;&#10;&#9;if res.MatchedCount == 0 {&#10;&#9;&#9;ctxLogger.Errorw(metricName, &quot;.MatchedCountZero&quot;, &quot;filter&quot;,&#10;&#9;&#9;&#9;filter, &quot;update&quot;, update)&#10;&#9;&#9;ihttp.RespondWithError(rw, http.StatusNotFound,&#10;&#9;&#9;&#9;&quot;not found&quot;)&#10;&#9;&#9;return&#10;&#9;}" description="" toReformat="false" toShortenFQNames="true">
     <context>
       <option name="GO" value="true" />
     </context>
-  </template>
-  <template name="imports" value="import (&#10; &quot;$END$&quot;&#10;)&#10;" description="Imports declaration" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <context />
-  </template>
-  <template name="consts" value="const (&#10; $NAME$ = $VALUE$$END$&#10;)&#10;" description="Constants declaration" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="NAME" expression="" defaultValue="&quot;name&quot;" alwaysStopAt="true" />
-    <variable name="VALUE" expression="complete()" defaultValue="" alwaysStopAt="true" />
-    <context />
-  </template>
-  <template name="vars" value="var (&#10; $NAME$ = $VALUE$$END$&#10;)&#10;" description="Variables declaration" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="NAME" expression="" defaultValue="&quot;name&quot;" alwaysStopAt="true" />
-    <variable name="VALUE" expression="complete()" defaultValue="" alwaysStopAt="true" />
-    <context />
-  </template>
-  <template name="types" value="type (&#10; $END$&#10;)&#10;" description="Types declaration" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <context />
-  </template>
-  <template name="p" value="package $NAME$" description="Package declaration" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="NAME" expression="complete()" defaultValue="" alwaysStopAt="true" />
-    <context />
-  </template>
-  <template name="iota" value="const $NAME$ $TYPE$ = iota" description="Iota constant declaration" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="NAME" expression="" defaultValue="&quot;name&quot;" alwaysStopAt="true" />
-    <variable name="TYPE" expression="complete()" defaultValue="" alwaysStopAt="true" />
-    <context />
-  </template>
-  <template name="fori" value="for $INDEX$ := 0; $INDEX$ &lt; $LIMIT$; $INDEX$++ {&#10; $END$&#10;}" description="Indexed for loop" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="INDEX" expression="" defaultValue="&quot;i&quot;" alwaysStopAt="true" />
-    <variable name="LIMIT" expression="" defaultValue="&quot;&quot;" alwaysStopAt="true" />
-    <context />
-  </template>
-  <template name="forr" value="for $KEY$, $VALUE$ := range $COLLECTION$ {&#10; $END$&#10;}" description="For range loop" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="COLLECTION" expression="" defaultValue="&quot;collection&quot;" alwaysStopAt="true" />
-    <variable name="KEY" expression="goSuggestVariableName()" defaultValue="&quot;key&quot;" alwaysStopAt="true" />
-    <variable name="VALUE" expression="goSuggestVariableName()" defaultValue="&quot;value&quot;" alwaysStopAt="true" />
-    <context />
-  </template>
-  <template name="printf" value="fmt.Printf(&quot;$END$&quot;,$VAR$)" description="printf" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="VAR" expression="complete()" defaultValue="" alwaysStopAt="true" />
-    <context />
-  </template>
-  <template name="err" value="if $ERR$ != nil {&#10; $END$&#10;}" description="If error" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="ERR" expression="errorVariable()" defaultValue="&quot;err&quot;" alwaysStopAt="true" />
-    <context />
-  </template>
-  <template name="xml" value="xml:&quot;$FIELD_NAME$&quot;" description="xml:&quot;&quot;" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="FIELD_NAME" expression="snakeCase(fieldName())" defaultValue="" alwaysStopAt="true" />
-    <context />
-  </template>
-  <template name="json" value="json:&quot;$FIELD_NAME$&quot;" description="json:&quot;&quot;" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="FIELD_NAME" expression="snakeCase(fieldName())" defaultValue="" alwaysStopAt="true" />
-    <context />
-  </template>
-  <template name="main" value="func main() {&#10; $END$&#10;}" description="Main function" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <context />
-  </template>
-  <template name="init" value="func init() {&#10; $END$&#10;}" description="Init function" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <context />
-  </template>
-  <template name="meth" value="func ($RECEIVER$ $TYPE_1$) $NAME$($PARAMS$) $TYPE_2$ {   &#10; $END$&#10;}" description="Method" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="TYPE_1" expression="complete()" defaultValue="" alwaysStopAt="true" />
-    <variable name="RECEIVER" expression="goSuggestVariableName()" defaultValue="&quot;receiver&quot;" alwaysStopAt="true" />
-    <variable name="NAME" expression="" defaultValue="&quot;name&quot;" alwaysStopAt="true" />
-    <variable name="PARAMS" expression="" defaultValue="" alwaysStopAt="true" />
-    <variable name="TYPE_2" expression="" defaultValue="" alwaysStopAt="true" />
-    <context />
-  </template>
-  <template name="test" value="func Test$NAME$(t *testing.T) {&#10; $END$&#10;}" description="Test" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="NAME" expression="" defaultValue="&quot;Name&quot;" alwaysStopAt="true" />
-    <context />
-  </template>
-  <template name="bench" value="func Benchmark$NAME$(b *testing.B) {&#10; for i := 0; i &lt; b.N; i++ {&#10; $END$&#10; }&#10;}" description="Benchmark" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="NAME" expression="" defaultValue="&quot;Name&quot;" alwaysStopAt="true" />
-    <context />
-  </template>
-  <template name="map" value="map[$KEY_TYPE$]$VALUE_TYPE$" description="Map type" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="KEY_TYPE" expression="complete()" defaultValue="" alwaysStopAt="true" />
-    <variable name="VALUE_TYPE" expression="complete()" defaultValue="" alwaysStopAt="true" />
-    <context />
-  </template>
-  <template name=":" value="$NAME$ := $VALUE$" description="Variable declaration :=" toReformat="true" toShortenFQNames="true" deactivated="true">
-    <variable name="NAME" expression="" defaultValue="&quot;name&quot;" alwaysStopAt="true" />
-    <variable name="VALUE" expression="complete()" defaultValue="" alwaysStopAt="true" />
-    <context />
   </template>
 </templateSet>
