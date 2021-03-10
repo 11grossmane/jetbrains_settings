@@ -24,6 +24,7 @@
   <action id="PrevSplitter">
     <keyboard-shortcut first-keystroke="meta 1" />
   </action>
+  <action id="Terminal.SwitchFocusToEditor" />
   <action id="Unsplit">
     <keyboard-shortcut first-keystroke="meta alt 1" />
   </action>
