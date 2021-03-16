@@ -1,8 +1,9 @@
 <application>
-  <component name="FileTypeManager" version="17">
+  <component name="FileTypeManager" version="18">
     <extensionMap>
       <mapping ext="payments-update-current-invoice-cron" type="Dockerfile" />
       <mapping ext="failed-payments-cron-worker" type="Dockerfile" />
+      <mapping ext="deployments" type="Makefile" />
       <mapping pattern=".tool-versions" type="PLAIN_TEXT" />
       <mapping pattern="tasks-worker" type="PLAIN_TEXT" />
       <mapping pattern=".tool-version" type="PLAIN_TEXT" />
