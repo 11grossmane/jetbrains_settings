@@ -1,10 +1,11 @@
 <application>
   <component name="GoSdkList">
-    <sdk-path>
+    <sdk-url>
       <set>
-        <option value="$USER_HOME$/.asdf/installs/golang/1.13.1/go" />
-        <option value="/usr/local/go" />
+        <option value="file://$USER_HOME$/.asdf/installs/golang/1.13.1/go" />
+        <option value="file://$USER_HOME$/.asdf/installs/golang/1.16.2/go" />
+        <option value="file:///usr/local/go" />
       </set>
-    </sdk-path>
+    </sdk-url>
   </component>
 </application>
